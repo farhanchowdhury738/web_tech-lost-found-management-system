@@ -203,6 +203,39 @@ class DatabaseConnection
         $id = (int) $id;
         return $connection->query("UPDATE users SET status='" . $status . "' WHERE id=" . $id);
     }
-    //---------------
+    
+    
+    function updateItemStatusByClaimStatus($connection, $claim_id, $claim_status)
+{
+    $claim_id = (int) $claim_id;
+
+    // Find the item connected to this claim
+    $result = $connection->query(
+        "SELECT item_id FROM claims WHERE id=" . $claim_id
+    );
+
+    if (!$result || $result->num_rows === 0) {
+        return false;
+    }
+
+    $claim = $result->fetch_assoc();
+    $item_id = (int) $claim["item_id"];
+
+    // Pending or Approved = item is unavailable
+    if ($claim_status === "Pending" || $claim_status === "Approved") {
+        return $connection->query(
+            "UPDATE items SET status='Claimed' WHERE id=" . $item_id
+        );
+    }
+
+    // Rejected or Returned = item becomes available again
+    if ($claim_status === "Rejected" || $claim_status === "Returned") {
+        return $connection->query(
+            "UPDATE items SET status='Open' WHERE id=" . $item_id
+        );
+    }
+
+    return true;
+}
 }
 ?>

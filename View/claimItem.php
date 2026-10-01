@@ -14,7 +14,11 @@ $connection = $database->openConnection();
 $itemId = $_GET["id"] ?? ($_SESSION["claim_item_id"] ?? 0);
 $item = $database->getItemById($connection, $itemId);
 
-if (!$item || $item["type"] !== "Found") {
+if (
+    !$item ||
+    $item["type"] !== "Found" ||
+    $item["status"] !== "Open"
+) {
     header("Location: foundItems.php");
     exit();
 }
@@ -48,9 +52,7 @@ include "header.php";
                     <label>Your Name:</label>
                 </td>
                 <td>
-                    <input
-                        type="text"
-                        name="name"
+                    <input type="text" name="name"
                         value="<?php echo htmlspecialchars($old["name"] ?? $_SESSION["loggedInUsername"] ?? ""); ?>">
                     <span class="error">
                         <?php echo htmlspecialchars($_SESSION["claimNameError"] ?? ""); ?>
@@ -63,9 +65,7 @@ include "header.php";
                     <label>Email Address:</label>
                 </td>
                 <td>
-                    <input
-                        type="email"
-                        name="email"
+                    <input type="email" name="email"
                         value="<?php echo htmlspecialchars($old["email"] ?? $_SESSION["loggedInEmail"] ?? ""); ?>">
                     <span class="error">
                         <?php echo htmlspecialchars($_SESSION["claimEmailError"] ?? ""); ?>
@@ -78,10 +78,7 @@ include "header.php";
                     <label>Phone Number:</label>
                 </td>
                 <td>
-                    <input
-                        type="text"
-                        name="phone"
-                        value="<?php echo htmlspecialchars($old["phone"] ?? ""); ?>">
+                    <input type="text" name="phone" value="<?php echo htmlspecialchars($old["phone"] ?? ""); ?>">
                     <span class="error">
                         <?php echo htmlspecialchars($_SESSION["claimPhoneError"] ?? ""); ?>
                     </span>
@@ -105,10 +102,7 @@ include "header.php";
                     <label>Upload Proof of Ownership:</label>
                 </td>
                 <td>
-                    <input
-                        type="file"
-                        name="proof"
-                        accept=".jpg,.jpeg,.png,.pdf,.webp">
+                    <input type="file" name="proof" accept=".jpg,.jpeg,.png,.pdf,.webp">
                     <span class="error">
                         <?php echo htmlspecialchars($_SESSION["claimProofError"] ?? ""); ?>
                     </span>
@@ -122,7 +116,8 @@ include "header.php";
                     <label>Additional Information:</label>
                 </td>
                 <td>
-                    <textarea name="additional_info"><?php echo htmlspecialchars($old["additional_info"] ?? ""); ?></textarea>
+                    <textarea
+                        name="additional_info"><?php echo htmlspecialchars($old["additional_info"] ?? ""); ?></textarea>
                     <br>
                     <small>(optional)</small>
                 </td>

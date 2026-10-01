@@ -24,8 +24,12 @@ $database = new DatabaseConnection();
 $connection = $database->openConnection();
 $item = $database->getItemById($connection, $item_id);
 
-if (!$item || $item["type"] !== "Found") {
-    $_SESSION["claimError"] = "This item cannot be claimed";
+if (
+    !$item ||
+    $item["type"] !== "Found" ||
+    $item["status"] !== "Open"
+) {
+    $_SESSION["claimError"] = "This item is currently unavailable for claiming";
     redirect("../View/foundItems.php");
 }
 

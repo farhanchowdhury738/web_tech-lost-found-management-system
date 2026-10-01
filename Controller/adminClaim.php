@@ -15,7 +15,13 @@ if (!$claim_id || !in_array($status, $allowed)) {
 $database = new DatabaseConnection();
 $connection = $database->openConnection();
 if ($database->updateClaimStatus($connection, $claim_id, $status)) {
-    $_SESSION["successMessage"] = "Claim status updated";
+
+    if ($database->updateItemStatusByClaimStatus($connection, $claim_id, $status)) {
+        $_SESSION["successMessage"] = "Claim status updated";
+    } else {
+        $_SESSION["claimAdminError"] = "Claim updated but item status could not be updated";
+    }
+
 } else {
     $_SESSION["claimAdminError"] = "Could not update claim status";
 }
