@@ -38,4 +38,3 @@ if ($action === "add") {
     }
 }
 redirect("../View/adminCategories.php");
-?>

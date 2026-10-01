@@ -250,7 +250,7 @@ if ($action === "add" || $action === "update") {
 }
 
 
-/* DELETE USER */
+//DELETE USER 
 
 elseif ($action === "delete") {
 
@@ -280,7 +280,7 @@ elseif ($action === "delete") {
 }
 
 
-/* UPDATE USER STATUS */
+// UPDATE USER STATUS 
 
 else {
 

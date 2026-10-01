@@ -47,7 +47,7 @@ if ($error)
     </form>
 </div>
 <div class="table-wrap">
-    <table class="table">
+    <table class="table table-list admin-items-list">
         <tr>
             <th>Image</th>
             <th>Title</th>

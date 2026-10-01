@@ -309,7 +309,7 @@ if ($success) {
 
 <div class="table-wrap">
 
-    <table class="table">
+    <table class="table table-list admin-users-list">
 
         <tr>
             <th>Name</th>

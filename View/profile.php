@@ -12,11 +12,8 @@ include "../Model/DatabaseConnection.php";
 $db = new DatabaseConnection();
 $con = $db->openConnection();
 
-$user = $db->getUserById($con, $_SESSION["loggedInUserId"]);
-
-$err = function ($k) {
-    return htmlspecialchars($_SESSION[$k] ?? "");
-};
+$userId = $_SESSION["loggedInUserId"];
+$user = $db->getUserById($con, $userId);
 
 include "header.php";
 
@@ -30,9 +27,25 @@ include "header.php";
         <h1>Profile Update</h1>
     </div>
 
+    <?php if (isset($_SESSION["profileMessage"])) { ?>
 
-    <!-- Update Name -->
+        <div class="success">
+            <?php echo $_SESSION["profileMessage"]; ?>
+        </div>
 
+    <?php } ?>
+
+    <?php if (isset($_SESSION["profileError"])) { ?>
+
+        <div class="error">
+            <?php echo $_SESSION["profileError"]; ?>
+        </div>
+
+    <?php } ?>
+
+
+
+    
     <div class="profile-box">
 
         <h3>Update Name</h3>
@@ -43,10 +56,14 @@ include "header.php";
 
                 <label>Full Name</label>
 
-                <input type="text" name="name" value="<?php echo htmlspecialchars($user["name"]); ?>">
+                <input
+                    type="text"
+                    name="name"
+                    value="<?php echo $user["name"]; ?>"
+                >
 
                 <div class="error">
-                    <?php echo $err("profileNameError"); ?>
+                    <?php echo $_SESSION["profileNameError"] ?? ""; ?>
                 </div>
 
             </div>
@@ -60,8 +77,8 @@ include "header.php";
     </div>
 
 
-    <!-- Change Password -->
 
+    
     <div class="profile-box">
 
         <h3>Change Password</h3>
@@ -72,40 +89,46 @@ include "header.php";
 
                 <label>Current Password</label>
 
-                <input type="password" name="current_password">
+                <input
+                    type="password"
+                    name="current_password"
+                >
 
                 <div class="error">
-                    <?php echo $err("currentPasswordError"); ?>
+                    <?php echo $_SESSION["currentPasswordError"] ?? ""; ?>
                 </div>
 
             </div>
-
 
             <div class="field">
 
                 <label>New Password</label>
 
-                <input type="password" name="new_password">
+                <input
+                    type="password"
+                    name="new_password"
+                >
 
                 <div class="error">
-                    <?php echo $err("newPasswordError"); ?>
+                    <?php echo $_SESSION["newPasswordError"] ?? ""; ?>
                 </div>
 
             </div>
-
 
             <div class="field">
 
                 <label>Confirm New Password</label>
 
-                <input type="password" name="confirm_password">
+                <input
+                    type="password"
+                    name="confirm_password"
+                >
 
                 <div class="error">
-                    <?php echo $err("confirmNewPasswordError"); ?>
+                    <?php echo $_SESSION["confirmNewPasswordError"] ?? ""; ?>
                 </div>
 
             </div>
-
 
             <button type="submit" class="profile-btn">
                 Change Password
@@ -117,11 +140,11 @@ include "header.php";
 
 </div>
 
-
 <?php
 
-unset($_SESSION["profileNameError"]);
+unset($_SESSION["profileMessage"]);
 unset($_SESSION["profileError"]);
+unset($_SESSION["profileNameError"]);
 unset($_SESSION["currentPasswordError"]);
 unset($_SESSION["newPasswordError"]);
 unset($_SESSION["confirmNewPasswordError"]);

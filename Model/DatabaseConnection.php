@@ -36,22 +36,24 @@ class DatabaseConnection
         return $result && $result->num_rows > 0;
     }
 
+    //nayem - for category management
+
     function getCategories($connection)
     {
         return $connection->query("SELECT * FROM categories ORDER BY name ASC");
     }
-
+    //nayem - for adding category
     function addCategory($connection, $name, $description)
     {
         return $connection->query("INSERT INTO categories (name, description) VALUES ('" . $name . "', '" . $description . "')");
     }
-
+    //nayem - for updating
     function updateCategory($connection, $id, $name, $description)
     {
         $id = (int) $id;
         return $connection->query("UPDATE categories SET name='" . $name . "', description='" . $description . "' WHERE id=" . $id);
     }
-
+    // nayem - for deleting
     function deleteCategory($connection, $id)
     {
         $id = (int) $id;
@@ -81,7 +83,9 @@ class DatabaseConnection
         }
 
         $where = count($conditions) > 0 ? " WHERE " . implode(" AND ", $conditions) : "";
-        $sql = "SELECT i.*, c.name AS category_name, u.name AS reporter_name, u.email AS reporter_email, u.phone AS reporter_phone FROM items i INNER JOIN categories c ON i.category_id=c.id INNER JOIN users u ON i.user_id=u.id" . $where . " ORDER BY i.created_at DESC";
+        $sql = "SELECT i.*, c.name AS category_name, u.name AS reporter_name, u.email AS reporter_email, u.phone AS reporter_phone FROM items i 
+        INNER JOIN categories c ON i.category_id=c.id 
+        INNER JOIN users u ON i.user_id=u.id" . $where . " ORDER BY i.created_at DESC";
         return $connection->query($sql);
     }
 
@@ -145,7 +149,7 @@ class DatabaseConnection
         return $connection->query("UPDATE claims SET status='" . $status . "', returned_at=" . ($status === "Returned" ? "NOW()" : "NULL") . " WHERE id=" . $claim_id);
     }
 
-
+    //UPDATE PROFILE
     function updateProfile($connection, $id, $name)
     {
         $id = (int) $id;
@@ -192,7 +196,7 @@ class DatabaseConnection
         $id = (int) $id;
         return $connection->query("DELETE FROM users WHERE id=" . $id);
     }
-    
+
 
     function updateUserStatus($connection, $id, $status)
     {

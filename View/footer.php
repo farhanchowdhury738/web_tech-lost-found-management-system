@@ -1,5 +1,9 @@
 </div>
-<div class="footer">© 2026 Khoja-Khuji. Lost it, we'll help find it.</div>
-</body>
 
+<footer class="footer">
+    <div>Khoja-Khuji · Campus Lost &amp; Found</div>
+    <div>Helping lost belongings find their way home.</div>
+</footer>
+
+</body>
 </html>
