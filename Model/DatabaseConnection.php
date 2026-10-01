@@ -4,10 +4,10 @@ class DatabaseConnection
 {
     function openConnection()
     {
-        $db_host = "sql208.infinityfree.com"; 
-        $db_user = "if0_42908464"; 
-        $db_password = "sBu5N2oQIPA"; 
-        $db_name = "if0_42908464_khoja_khuji"; 
+        $db_host = "localhost";
+        $db_user = "root";
+        $db_password = "";
+        $db_name = "khoja_khuji";
 
         $connection = new mysqli($db_host, $db_user, $db_password, $db_name);
         if ($connection->connect_error) {
