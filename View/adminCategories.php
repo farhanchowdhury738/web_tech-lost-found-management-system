@@ -57,7 +57,7 @@ if ($error) {
 <fieldset>
     <legend>Categories</legend>
 
-    <table class="table">
+    <table class="table table-list category-list">
 
         <tr>
             <th>Name</th>

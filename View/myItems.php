@@ -14,7 +14,7 @@ include "header.php";
     <h1>My Reported Items</h1><a class="btn" href="reportItem.php">Report New Item</a>
 </div>
 <div class="table-wrap">
-    <table class="table">
+    <table class="table table-list my-items-list">
         <tr>
             <th>Item</th>
             <th>Type</th>

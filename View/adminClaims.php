@@ -25,7 +25,7 @@ if ($error) {
 <h1>Manage Claims</h1>
 
 <div class="table-wrap">
-    <table class="table">
+    <table class="table table-list admin-claims-list">
         <tr>
             <th>Item</th>
             <th>Claimant</th>

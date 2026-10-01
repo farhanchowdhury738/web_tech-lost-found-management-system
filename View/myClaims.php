@@ -12,7 +12,7 @@ include "header.php";
 ?>
 <h1>My Claims</h1>
 <div class="table-wrap">
-    <table class="table">
+    <table class="table table-list my-claims-list">
         <tr>
             <th>Item</th>
             <th>Type</th>
